@@ -13,14 +13,16 @@ export class InboxPageComponent {
       selected: false,
       subtitle: 'Subtitle 1',
       description: 'Description 1',
+      date: new Date(),
     },
     {
       id: 2,
-
       title: 'Inbox item 2',
       selected: false,
       subtitle: 'Subtitle 2',
       description: 'Description 2',
     },
   ];
+
+  lastUpdated = new Date();
 }

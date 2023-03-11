@@ -1,1 +1,4 @@
-<p>message-list-item works!</p>
+<div *ngFor="let item of message | keyvalue">
+  {{ item.key }}: {{ item.value }}
+</div>
+<hr />

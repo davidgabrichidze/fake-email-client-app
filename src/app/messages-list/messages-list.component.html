@@ -1,3 +1,6 @@
-<h3>messages-list works!</h3>
-<p>Here will be list of list items</p>
-<app-message-list-item></app-message-list-item>
+<h3>List of Messages</h3>
+<ul style="list-style: none">
+  <li *ngFor="let item of items">
+    <app-message-list-item [message]="item"></app-message-list-item>
+  </li>
+</ul>

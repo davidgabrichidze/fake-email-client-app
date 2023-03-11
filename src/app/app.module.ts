@@ -10,8 +10,18 @@ import { MessageContentComponent } from './message-content/message-content.compo
 import { HeaderComponent } from './header/header.component';
 import { MessageListItemComponent } from './message-list-item/message-list-item.component';
 import { MessageViewComponent } from './message-view/message-view.component';
+import { PrototypeUiModule, TooltipModule } from './directives';
+import { TimeAgoModule, TruncatePipeModule } from './pipes';
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    PrototypeUiModule,
+    TimeAgoModule,
+    TruncatePipeModule,
+    TooltipModule,
+  ],
   declarations: [
     AppComponent,
     InboxPageComponent,
@@ -20,13 +30,9 @@ import { MessageViewComponent } from './message-view/message-view.component';
     MessageContentComponent,
     HeaderComponent,
     MessageListItemComponent,
-    MessageViewComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
+    MessageViewComponent,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

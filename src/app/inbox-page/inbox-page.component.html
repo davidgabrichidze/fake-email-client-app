@@ -1,4 +1,4 @@
-<div>
+<main>
   <div>
     <app-menu-sidebar></app-menu-sidebar>
   </div>
@@ -7,7 +7,18 @@
       <app-messages-list [items]="items"></app-messages-list>
     </div>
     <div>
-      <app-message-view></app-message-view>
+      {{ items | json }}
+    </div>
+    <div>
+      <app-message-view
+        appTooltip="This will be a view of the selected message"
+      ></app-message-view>
     </div>
   </div>
-</div>
+</main>
+<hr />
+<footer>
+  last updated: {{ lastUpdated | date : "shortDate" }} ({{
+    lastUpdated | timeAgo
+  }})
+</footer>
