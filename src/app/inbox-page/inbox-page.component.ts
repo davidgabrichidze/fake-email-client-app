@@ -1,28 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { EmailStorageService } from '../services';
 
 @Component({
   selector: 'app-inbox-page',
   templateUrl: './inbox-page.component.html',
   styleUrls: ['./inbox-page.component.scss'],
 })
-export class InboxPageComponent {
-  items = [
-    {
-      id: 1,
-      title: 'Inbox item 1',
-      selected: false,
-      subtitle: 'Subtitle 1',
-      description: 'Description 1',
-      date: new Date(),
-    },
-    {
-      id: 2,
-      title: 'Inbox item 2',
-      selected: false,
-      subtitle: 'Subtitle 2',
-      description: 'Description 2',
-    },
-  ];
+export class InboxPageComponent implements OnInit {
+  items = [];
 
   lastUpdated = new Date();
+
+  constructor(private emailService: EmailStorageService) {}
+
+  ngOnInit() {
+    this.items = this.emailService.find();
+  }
 }

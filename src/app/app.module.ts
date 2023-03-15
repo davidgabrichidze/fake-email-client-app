@@ -12,6 +12,7 @@ import { MessageListItemComponent } from './message-list-item/message-list-item.
 import { MessageViewComponent } from './message-view/message-view.component';
 import { PrototypeUiModule, TooltipModule } from './directives';
 import { TimeAgoModule, TruncatePipeModule } from './pipes';
+import { MessageListService } from './services/message-list.service';
 
 @NgModule({
   imports: [
@@ -32,7 +33,6 @@ import { TimeAgoModule, TruncatePipeModule } from './pipes';
     MessageListItemComponent,
     MessageViewComponent,
   ],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
