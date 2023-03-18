@@ -7,6 +7,7 @@ export interface EmailMessage {
   recipient: string;
   subject: string;
   body: string;
+  read?: boolean;
   date: Date;
   priority: MessagePriority;
 }

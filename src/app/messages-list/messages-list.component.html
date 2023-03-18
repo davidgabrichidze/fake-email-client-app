@@ -1,6 +1,7 @@
-<h3>List of Messages</h3>
-<ul style="list-style: none">
-  <li *ngFor="let item of items">
-    <app-message-list-item [message]="item"></app-message-list-item>
-  </li>
-</ul>
+<h3 class="text-lg font-bold">List of Messages</h3>
+<div [@listAnimation]>
+  <app-message-list-item
+    *ngFor="let item of items"
+    [message]="item"
+  ></app-message-list-item>
+</div>

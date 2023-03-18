@@ -1,4 +1,11 @@
-<div *ngFor="let item of message | keyvalue">
-  {{ item.key }}: {{ item.value }}
+<div
+  [@fadeIn]
+  [@readUnread]="readUnreadState"
+  class="shadow border-gray-light border-solid border rounded-md p-2 mb-1 text-sm"
+>
+  <h3 [ngClass]="{ 'font-bold': !message.read }">{{ message.subject }}</h3>
+  <p>{{ message.body }}</p>
+  <p class="text-xs text-gray">
+    {{ message.sender }}, sent: {{ message.date | timeAgo }}
+  </p>
 </div>
-<hr />

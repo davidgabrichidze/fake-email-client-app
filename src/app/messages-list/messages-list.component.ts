@@ -5,6 +5,15 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import {
+  trigger,
+  transition,
+  query,
+  style,
+  stagger,
+  animate,
+} from '@angular/animations';
+
 import { MessageListService } from '../services/message-list.service';
 
 @Component({
@@ -12,6 +21,18 @@ import { MessageListService } from '../services/message-list.service';
   templateUrl: './messages-list.component.html',
   styleUrls: ['./messages-list.component.scss'],
   providers: [MessageListService],
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+        query(':enter', style({ opacity: 0 }), { optional: true }),
+        query(
+          ':enter',
+          stagger('100ms', [animate('500ms ease-in', style({ opacity: 1 }))]),
+          { optional: true }
+        ),
+      ]),
+    ]),
+  ],
 })
 export class MessagesListComponent implements OnInit, OnChanges {
   @Input() items: any[] = [];

@@ -1,23 +1,19 @@
-<main>
-  <div>
+<main class="flex flex-row">
+  <div class="p-2 w-60 border-r border-gray-light">
     <app-menu-sidebar></app-menu-sidebar>
   </div>
-  <div>
-    <div>
+  <div class="p-2 w-full flex flex-row">
+    <div class="w-60">
       <app-messages-list [items]="items"></app-messages-list>
     </div>
-    <div>
-      {{ items | json }}
-    </div>
-    <div>
+    <div class="w-full p-2 px-4">
       <app-message-view
         appTooltip="This will be a view of the selected message"
       ></app-message-view>
     </div>
   </div>
 </main>
-<hr />
-<footer>
+<footer class="p-1 fixed bg-blue bottom-0 left-0 right-0 h-8">
   last updated: {{ lastUpdated | date : "shortDate" }} ({{
     lastUpdated | timeAgo
   }})

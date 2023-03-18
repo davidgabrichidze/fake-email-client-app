@@ -1,21 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* You can add global styles to this file, and also import other style files */
 .tooltip {
   position: relative;
-}
-
-.tooltip .tooltip-text {
-  background-color: #555;
-  border-radius: 5px;
-  color: #fff;
-  display: flex;
-  left: 50%;
-  opacity: 0.95;
-  padding: 5px;
-  position: absolute;
-  top: 100%;
-  transform: translateX(-50%);
-  width: fit-content;
-  z-index: 1;
-  align-items: center;
-  justify-content: flex-start;
+  .tooltip-text {
+    background-color: #555;
+    border-radius: 5px;
+    color: #fff;
+    display: flex;
+    left: 50%;
+    opacity: 0.95;
+    padding: 5px;
+    position: absolute;
+    top: 100%;
+    transform: translateX(-50%);
+    width: fit-content;
+    z-index: 1;
+    align-items: center;
+    justify-content: flex-start;
+  }
 }
