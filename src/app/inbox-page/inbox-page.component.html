@@ -4,7 +4,24 @@
   </div>
   <div class="p-2 w-full flex flex-row">
     <div class="w-60">
-      <app-messages-list [items]="items"></app-messages-list>
+      <!-- <app-messages-list
+        [items]="items$ | async"
+        (filterChanged)="onFilterChanged($event)"
+        (messageClicked)="onMessageClicked($event)"
+      ></app-messages-list>
+
+      <app-messages-list-form-control
+        [items]="items$ | async"
+        (filterChanged)="onFilterChanged($event)"
+        (messageClicked)="onMessageClicked($event)"
+      ></app-messages-list-form-control>-->
+
+      <app-messages-list-form-group
+        [items]="items$ | async"
+        (filterChanged)="onFilterChanged($event)"
+        (messageClicked)="onMessageClicked($event)"
+      ></app-messages-list-form-group>
+      <!---->
     </div>
     <div class="w-full p-2 px-4">
       <app-message-view

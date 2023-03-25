@@ -6,7 +6,13 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, HostListener, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+} from '@angular/core';
 import { EmailMessage } from '../models';
 
 @Component({
@@ -30,13 +36,14 @@ import { EmailMessage } from '../models';
 })
 export class MessageListItemComponent {
   @Input() message: EmailMessage;
+  @Output() messageClicked = new EventEmitter<{ id: string }>();
 
   get readUnreadState() {
-    return this.message.read ? 'read' : 'unread';
+    return this.message.readAt ? 'read' : 'unread';
   }
 
   @HostListener('click') onClick() {
-    this.message.read = !this.message.read;
+    this.messageClicked.emit({ id: this.message.id });
   }
 
   onAnimationEvent(event: AnimationEvent): void {

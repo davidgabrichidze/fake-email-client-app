@@ -1,9 +1,11 @@
 <h3 class="text-lg font-bold">List of Messages</h3>
+
 <div class="mb-2 p-2 border border-gray-light">
-  <p>Template form</p>
+  <p>Reactive form</p>
+
   <!-- Location Control -->
   <select
-    [(ngModel)]="location"
+    [formControl]="locationControl"
     autocomplete="off"
     type="text"
     placeholder="Location"
@@ -17,13 +19,12 @@
 
   <!-- Search Control -->
   <input
-    [(ngModel)]="search"
+    [formControl]="searchControl"
     autocomplete="off"
     type="text"
     placeholder="Search"
   />
-  <small class="text-sm">search: {{ search }}</small>
-  <small class="text-sm">location: {{ location }}</small>
+  <small class="text-sm">value: {{ searchControl.value }}</small>
 </div>
 
 <div [@listAnimation]>

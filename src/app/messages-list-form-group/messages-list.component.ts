@@ -16,11 +16,12 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { debounceTime } from 'rxjs';
 
 import { MessageListService } from '../services/message-list.service';
 
 @Component({
-  selector: 'app-messages-list',
+  selector: 'app-messages-list-form-group',
   templateUrl: './messages-list.component.html',
   styleUrls: ['./messages-list.component.scss'],
   providers: [MessageListService],
@@ -37,31 +38,25 @@ import { MessageListService } from '../services/message-list.service';
     ]),
   ],
 })
-export class MessagesListComponent implements OnInit, OnChanges {
+export class MessagesListFormGroupComponent implements OnInit, OnChanges {
   @Input() items: any[] = [];
 
   @Output() filterChanged = new EventEmitter<any>();
 
   @Output() messageClicked = new EventEmitter<any>();
 
-  private _search = '';
+  formGroup = new FormGroup({
+    search: new FormControl(),
+    location: new FormControl(null, [Validators.required]),
+  });
 
-  get search() {
-    return this._search;
-  }
-  set search(value: string) {
-    this._search = value;
-    this.fireEvent();
-  }
-
-  private _location = 'inbox';
-
-  get location() {
-    return this._location;
-  }
-  set location(value: string) {
-    this._location = value;
-    this.fireEvent();
+  constructor() {
+    this.formGroup.valueChanges.pipe(debounceTime(500)).subscribe((value) => {
+      this.filterChanged.emit({
+        query: value.search,
+        location: value.location,
+      });
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -76,12 +71,5 @@ export class MessagesListComponent implements OnInit, OnChanges {
     this.messageClicked.emit(event);
 
     this.items.find((item) => item.id === event.id).readAt = new Date();
-  }
-
-  private fireEvent() {
-    this.filterChanged.emit({
-      query: this.search,
-      location: this.location,
-    });
   }
 }

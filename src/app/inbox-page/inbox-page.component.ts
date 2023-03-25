@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmailStorageService } from '../services';
+import { MessageListService } from '../services';
 
 @Component({
   selector: 'app-inbox-page',
@@ -7,13 +7,19 @@ import { EmailStorageService } from '../services';
   styleUrls: ['./inbox-page.component.scss'],
 })
 export class InboxPageComponent implements OnInit {
-  items = [];
+  items$ = this.service.find({ location: 'inbox' });
 
   lastUpdated = new Date();
 
-  constructor(private emailService: EmailStorageService) {}
+  constructor(private service: MessageListService) {}
 
-  ngOnInit() {
-    this.items = this.emailService.find();
+  ngOnInit() {}
+
+  onFilterChanged(filters) {
+    this.items$ = this.service.find(filters);
+  }
+
+  onMessageClicked(message: { id: string; query }) {
+    this.service.markAsRead(message.id).subscribe();
   }
 }
