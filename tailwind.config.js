@@ -1,6 +1,75 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ["./src/**/*.{html,js,ts}"],
+const path = require("path");
+const colors = require("tailwindcss/colors");
+const defaultTheme = require("tailwindcss/defaultTheme");
+const generatePalette = require(path.resolve(
+  __dirname,
+  "src/@fuse/tailwind/utils/generate-palette"
+));
+
+/**
+ * Custom palettes
+ *
+ * Uses the generatePalette helper method to generate
+ * Tailwind-like color palettes automatically
+ */
+const customPalettes = {
+  brand: generatePalette("#2196F3"),
+};
+
+/**
+ * Themes
+ */
+const themes = {
+  // Default theme is required for theming system to work correctly!
+  default: {
+    primary: {
+      ...colors.indigo,
+      DEFAULT: colors.indigo[600],
+    },
+    accent: {
+      ...colors.slate,
+      DEFAULT: colors.slate[800],
+    },
+    warn: {
+      ...colors.red,
+      DEFAULT: colors.red[600],
+    },
+    "on-warn": {
+      500: colors.red["50"],
+    },
+  },
+  // Rest of the themes will use the 'default' as the base
+  // theme and will extend it with their given configuration.
+  brand: {
+    primary: customPalettes.brand,
+  },
+  teal: {
+    primary: {
+      ...colors.teal,
+      DEFAULT: colors.teal[600],
+    },
+  },
+  rose: {
+    primary: colors.rose,
+  },
+  purple: {
+    primary: {
+      ...colors.purple,
+      DEFAULT: colors.purple[600],
+    },
+  },
+  amber: {
+    primary: colors.amber,
+  },
+};
+
+/**
+ * Tailwind configuration
+ */
+const config = {
+  darkMode: "class",
+  content: ["./src/**/*.{html,scss,ts}"],
+  important: true,
   theme: {
     fontSize: {
       xs: "0.625rem",
@@ -25,28 +94,19 @@ module.exports = {
       lg: "1280px",
       xl: "1440px",
     },
-    animation: {
-      "spin-slow": "spin 3s linear infinite",
-    },
     extend: {
       animation: {
         "spin-slow": "spin 3s linear infinite",
       },
       colors: {
-        transparent: "transparent",
-        current: "currentColor",
-        blue: "#1fb6ff",
-        purple: "#7e5bef",
-        pink: "#ff49db",
-        orange: "#ff7849",
-        green: "#13ce66",
-        yellow: "#ffc82c",
-        "gray-dark": "#273444",
-        gray: "#8492a6",
-        "gray-light": "#d3dce6",
+        gray: colors.slate,
       },
       flex: {
         0: "0 0 auto",
+      },
+      fontFamily: {
+        sans: `"Inter var", ${defaultTheme.fontFamily.sans.join(",")}`,
+        mono: `"IBM Plex Mono", ${defaultTheme.fontFamily.mono.join(",")}`,
       },
       opacity: {
         12: "0.12",
@@ -110,6 +170,107 @@ module.exports = {
         "2/4": "50%",
         "3/4": "75%",
       },
+      minHeight: ({ theme }) => ({
+        ...theme("spacing"),
+      }),
+      maxHeight: {
+        none: "none",
+      },
+      minWidth: ({ theme }) => ({
+        ...theme("spacing"),
+        screen: "100vw",
+      }),
+      maxWidth: ({ theme }) => ({
+        ...theme("spacing"),
+        screen: "100vw",
+      }),
+      transitionDuration: {
+        400: "400ms",
+      },
+      transitionTimingFunction: {
+        drawer: "cubic-bezier(0.25, 0.8, 0.25, 1)",
+      },
+
+      // @tailwindcss/typography
+      typography: ({ theme }) => ({
+        DEFAULT: {
+          css: {
+            color: "var(--fuse-text-default)",
+            '[class~="lead"]': {
+              color: "var(--fuse-text-secondary)",
+            },
+            a: {
+              color: "var(--fuse-primary-500)",
+            },
+            strong: {
+              color: "var(--fuse-text-default)",
+            },
+            "ol > li::before": {
+              color: "var(--fuse-text-secondary)",
+            },
+            "ul > li::before": {
+              backgroundColor: "var(--fuse-text-hint)",
+            },
+            hr: {
+              borderColor: "var(--fuse-border)",
+            },
+            blockquote: {
+              color: "var(--fuse-text-default)",
+              borderLeftColor: "var(--fuse-border)",
+            },
+            h1: {
+              color: "var(--fuse-text-default)",
+            },
+            h2: {
+              color: "var(--fuse-text-default)",
+            },
+            h3: {
+              color: "var(--fuse-text-default)",
+            },
+            h4: {
+              color: "var(--fuse-text-default)",
+            },
+            "figure figcaption": {
+              color: "var(--fuse-text-secondary)",
+            },
+            code: {
+              color: "var(--fuse-text-default)",
+              fontWeight: "500",
+            },
+            "a code": {
+              color: "var(--fuse-primary)",
+            },
+            pre: {
+              color: theme("colors.white"),
+              backgroundColor: theme("colors.gray.800"),
+            },
+            thead: {
+              color: "var(--fuse-text-default)",
+              borderBottomColor: "var(--fuse-border)",
+            },
+            "tbody tr": {
+              borderBottomColor: "var(--fuse-border)",
+            },
+            'ol[type="A" s]': false,
+            'ol[type="a" s]': false,
+            'ol[type="I" s]': false,
+            'ol[type="i" s]': false,
+          },
+        },
+        sm: {
+          css: {
+            code: {
+              fontSize: "1em",
+            },
+            pre: {
+              fontSize: "1em",
+            },
+            table: {
+              fontSize: "1em",
+            },
+          },
+        },
+      }),
     },
   },
   corePlugins: {
@@ -119,7 +280,20 @@ module.exports = {
     clear: false,
     placeholderColor: false,
     placeholderOpacity: false,
-    verticalAlign: true,
+    verticalAlign: false,
   },
-  plugins: [],
+  plugins: [
+    // Fuse - Tailwind plugins
+    require(path.resolve(__dirname, "src/@fuse/tailwind/plugins/utilities")),
+    require(path.resolve(__dirname, "src/@fuse/tailwind/plugins/icon-size")),
+    require(path.resolve(__dirname, "src/@fuse/tailwind/plugins/theming"))({
+      themes,
+    }),
+
+    // Other third party and/or custom plugins
+    require("@tailwindcss/typography")({ modifiers: ["sm", "lg"] }),
+    require("@tailwindcss/line-clamp"),
+  ],
 };
+
+module.exports = config;
