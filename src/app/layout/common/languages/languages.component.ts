@@ -21,7 +21,7 @@ import {
   exportAs: 'languages',
 })
 export class LanguagesComponent implements OnInit, OnDestroy {
-  availableLangs: AvailableLangs;
+  availableLangs: any;
   activeLang: string;
   flagCodes: any;
 
